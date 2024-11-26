@@ -26,52 +26,37 @@ export const FixtureList: React.FC<Props> = ({ matches, currentWeek, onScoreUpda
   };
 
   return (
-    <div className="space-y-4">
-      <h2 className="text-2xl font-bold text-gray-800 mb-4">
-        Week {currentWeek} Fixtures
-      </h2>
-      <div className="grid gap-4 md:grid-cols-2">
+    <div>
+      <h2>Week {currentWeek} Fixtures</h2>
+      <ul>
         {weekMatches.map(match => (
-          <div 
-            key={match.id}
-            className="bg-white rounded-lg shadow p-4 hover:shadow-lg transition-shadow"
-          >
-            <div className="flex items-center justify-between mb-2">
-              <div className="flex items-center space-x-2">
-                {match.isCompleted && <Trophy className="text-yellow-500 w-5 h-5" />}
-                <span className="text-sm text-gray-500">
-                  {match.date || 'Date TBD'}
-                </span>
-              </div>
+          <li key={match.id}>
+            <div>
+              {match.isCompleted && <Trophy />}
+              <span>{match.date || 'Date TBD'}</span>
             </div>
-            <div className="grid grid-cols-3 gap-4 items-center">
-              <div className="text-right font-medium">{match.homeTeam.name}</div>
-              <div className="flex justify-center items-center space-x-2">
-                <input
-                  type="number"
-                  min="0"
-                  max="10"
-                  value={match.homeScore || ''}
-                  onChange={(e) => handleScoreChange(match.id, true, e.target.value, match)}
-                  className="w-12 text-center border rounded p-1"
-                  disabled={match.isCompleted}
-                />
-                <span className="text-gray-500">-</span>
-                <input
-                  type="number"
-                  min="0"
-                  max="10"
-                  value={match.awayScore || ''}
-                  onChange={(e) => handleScoreChange(match.id, false, e.target.value, match)}
-                  className="w-12 text-center border rounded p-1"
-                  disabled={match.isCompleted}
-                />
-              </div>
-              <div className="text-left font-medium">{match.awayTeam.name}</div>
+            <div>
+              <span>{match.homeTeam.name}</span>
+              <input
+                type="number"
+                value={match.homeScore}
+                onChange={(e) => handleScoreChange(match.id, true, e.target.value, match)}
+                className="w-12 text-center border rounded p-1"
+                disabled={match.isCompleted}
+              />
+              -
+              <input
+                type="number"
+                value={match.awayScore}
+                onChange={(e) => handleScoreChange(match.id, false, e.target.value, match)}
+                className="w-12 text-center border rounded p-1"
+                disabled={match.isCompleted}
+              />
+              <span>{match.awayTeam.name}</span>
             </div>
-          </div>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 };
